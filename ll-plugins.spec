@@ -1,7 +1,7 @@
 Summary:	A collection of LV2 plugins
 Name:		ll-plugins
 Version:	0.2.1
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	GPLv3+
 Group:		Sound
 URL:		http://ll-plugins.nongnu.org/index.html
