@@ -1,29 +1,29 @@
-Summary:	A collection of LV2 plugins
-Name:		ll-plugins
-Version:	0.2.8
-Release:	%mkrel 1
-License:	GPLv3+
-Group:		Sound
-URL:		http://ll-plugins.nongnu.org/index.html
-Source0:	http://download.savannah.nongnu.org/releases/ll-plugins/%{name}-%{version}.tar.bz2
-Requires:	jackit >= 0.109
-BuildRequires:	alsa-lib-devel
-BuildRequires:	boost-devel
-BuildRequires:	cairomm-devel
-BuildRequires:	fftw3-devel
-BuildRequires:	gsl-devel
-BuildRequires:	gtkmm2.4-devel >= 2.6.0
-BuildRequires:	jackit
-BuildRequires:	lash-devel
-BuildRequires:	libjack-devel >= 0.109
-BuildRequires:	liblo-devel
-BuildRequires:	lv2-c++-tools
-BuildRequires:	lv2-c++-tools-devel
-BuildRequires:	pkgconfig
-BuildRequires:	libsamplerate-devel
-BuildRequires:	sndfile-devel
-BuildRequires:	sigc++2.0-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+Summary:    A collection of LV2 plugins
+Name:       ll-plugins
+Version:    0.2.8
+Release:    2
+License:    GPLv3+
+Group:      Sound
+URL:        http://ll-plugins.nongnu.org/index.html
+Source0:    http://download.savannah.nongnu.org/releases/ll-plugins/%{name}-%{version}.tar.bz2
+Requires:   jackit >= 0.109
+BuildRequires:  alsa-lib-devel
+BuildRequires:  boost-devel
+BuildRequires:  cairomm-devel
+BuildRequires:  fftw3-devel
+BuildRequires:  gsl-devel
+BuildRequires:  gtkmm2.4-devel >= 2.6.0
+BuildRequires:  jackit
+BuildRequires:  lash-devel
+BuildRequires:  jackit-devel >= 0.109
+BuildRequires:  liblo-devel
+BuildRequires:  lv2-c++-tools
+BuildRequires:  lv2-c++-tools-devel
+BuildRequires:  pkgconfig
+BuildRequires:  libsamplerate-devel
+BuildRequires:  sndfile-devel
+BuildRequires:  sigc++2.0-devel
+BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 THE PLUGINS
@@ -34,7 +34,7 @@ of the peak meter). The GUIs, for the plugins that have GUIs, are installed in
 bundles of their own to make it easier for packagers to put them in separate
 binary packages to avoid Gtk dependencies for the plugins themselves.
 
-The plugins are reasonably simple and could be used as examples or starting 
+The plugins are reasonably simple and could be used as examples or starting
 points for hackers who want to write LV2 plugins based on the frameworks in
 the lv2-c++-tools package. There are synths, event processors, simple audio
 and control manipulators and GUI-based plugins.
@@ -47,12 +47,12 @@ You can control the speed of the arpeggio and the direction (up or down).
 
 CONTROL2MIDI
 ============
-A plugin that converts a LV2 control port value to MIDI CC events. You can 
+A plugin that converts a LV2 control port value to MIDI CC events. You can
 set the CC number and the expected range of the input value.
 
 KLAVIATUR
 =========
-A MIDI keyboard. You can use it to send pitchbend events, CC events and of 
+A MIDI keyboard. You can use it to send pitchbend events, CC events and of
 course notes, using mouse or keyboard. Handy when you want to test a synth
 patch but don't have a real keyboard nearby. Klaviatur has a Gtk GUI that you
 use to control it.
@@ -77,7 +77,7 @@ RUDOLF 556
 ==========
 A simple drum machine with six separate drum voices - two bass drums, two
 snares and two hihats. The different voices are mapped to C, D, E, F, G and A
-in all octaves, and every voice has three control parameters (length, 
+in all octaves, and every voice has three control parameters (length,
 hardness and volume). This plugin has a Gtk GUI that you can use to control the
 parameters.
 
@@ -87,22 +87,22 @@ An LV2 version of the Sineshaper synth - two sine oscillators fed through
 two sine waveshapers in series, with a bunch of parameters to control them.
 This plugin has a Gtk GUI too.
 
-%package	gui
-Summary:	GUIs for the ll-plugins package
-Group:		Sound
+%package    gui
+Summary:    GUIs for the ll-plugins package
+Group:      Sound
 
-%description	gui
+%description    gui
 This package contains the GUIs for the ll-plugins.
 
-%package -n	elven
-Summary:	The LV2 host Elven
-Group:		Sound
-Requires:	jackit >= 0.109
+%package -n elven
+Summary:    The LV2 host Elven
+Group:      Sound
+Requires:   jackit >= 0.109
 
-%description -n	elven
+%description -n elven
 THE HOST
 ========
-The host that comes with this package is called Elven (Experimental LV2 
+The host that comes with this package is called Elven (Experimental LV2
 Execution ENvironment). It is pretty slow and I don't really recommend it.
 If you can use another host, do that.
 
@@ -112,9 +112,10 @@ If you can use another host, do that.
 
 %build
 ./configure \
-	--prefix=%{_prefix} \
-	--libdir=%{_libdir} \
-	--CFLAGS="%{optflags} -Dclear_path=begin_new_path"
+    --prefix=%{_prefix} \
+    --libdir=%{_libdir} \
+    --CFLAGS="%{optflags} -Dclear_path=begin_new_path" \
+    --LDFLAGS=-ldl
 
 %make
 
@@ -122,11 +123,11 @@ If you can use another host, do that.
 rm -rf %{buildroot}
 
 %makeinstall_std \
-	build_experimental=yes \
-	install-lv2-plugins \
-	prefix=%{_prefix} \
-	libdir=%{_libdir} \
-	docdir=%{_docdir}/%{name}
+    build_experimental=yes \
+    install-lv2-plugins \
+    prefix=%{_prefix} \
+    libdir=%{_libdir} \
+    docdir=%{_docdir}/%{name}
 
 %clean
 rm -rf %{buildroot}
