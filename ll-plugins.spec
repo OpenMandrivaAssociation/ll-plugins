@@ -1,13 +1,13 @@
 Summary:    A collection of LV2 plugins
 Name:       ll-plugins
 Version:    0.2.8
-Release:    2
+Release:    3
 License:    GPLv3+
 Group:      Sound
 URL:        http://ll-plugins.nongnu.org/index.html
 Source0:    http://download.savannah.nongnu.org/releases/ll-plugins/%{name}-%{version}.tar.bz2
 Requires:   jackit >= 0.109
-BuildRequires:  alsa-lib-devel
+BuildRequires:  libalsa-devel
 BuildRequires:  boost-devel
 BuildRequires:  cairomm-devel
 BuildRequires:  fftw3-devel
