@@ -157,3 +157,28 @@ rm -rf %{buildroot}
 %doc COPYING
 %{_bindir}/elven
 
+
+
+%changelog
+* Wed Apr 25 2012 Frank Kober <emuse@mandriva.org> 0.2.8-3
++ Revision: 793397
+- rebuild fixing BRs
+
+* Sat Dec 24 2011 Frank Kober <emuse@mandriva.org> 0.2.8-2
++ Revision: 745052
+- rebuild fixing dl linking requirement
+
+* Wed Mar 16 2011 Stéphane Téletchéa <steletch@mandriva.org> 0.2.8-1
++ Revision: 645288
+- update to new version 0.2.8
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+
+* Tue Nov 25 2008 Oden Eriksson <oeriksson@mandriva.com> 0.2.1-1mdv2009.1
++ Revision: 306743
+- import ll-plugins
+
+
+* Tue Nov 25 2008 Oden Eriksson <oeriksson@mandriva.com> 0.2.1-1mdv2009.0
+- initial Mandriva package
