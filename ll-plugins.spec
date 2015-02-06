@@ -1,7 +1,7 @@
 Summary:    A collection of LV2 plugins
 Name:       ll-plugins
 Version:    0.2.8
-Release:    3
+Release:    4
 License:    GPLv3+
 Group:      Sound
 URL:        http://ll-plugins.nongnu.org/index.html
