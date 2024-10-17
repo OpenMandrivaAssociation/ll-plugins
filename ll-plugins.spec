@@ -4,7 +4,7 @@ Version:    0.2.8
 Release:    4
 License:    GPLv3+
 Group:      Sound
-URL:        http://ll-plugins.nongnu.org/index.html
+URL:        https://ll-plugins.nongnu.org/index.html
 Source0:    http://download.savannah.nongnu.org/releases/ll-plugins/%{name}-%{version}.tar.bz2
 Requires:   jackit >= 0.109
 BuildRequires:  libalsa-devel
