@@ -1,29 +1,27 @@
-Summary:    A collection of LV2 plugins
-Name:       ll-plugins
-Version:    0.2.8
-Release:    4
-License:    GPLv3+
-Group:      Sound
-URL:        https://ll-plugins.nongnu.org/index.html
-Source0:    http://download.savannah.nongnu.org/releases/ll-plugins/%{name}-%{version}.tar.bz2
-Requires:   jackit >= 0.109
-BuildRequires:  libalsa-devel
-BuildRequires:  boost-devel
-BuildRequires:  cairomm-devel
-BuildRequires:  fftw3-devel
-BuildRequires:  gsl-devel
-BuildRequires:  gtkmm2.4-devel >= 2.6.0
-BuildRequires:  jackit
-BuildRequires:  lash-devel
-BuildRequires:  jackit-devel >= 0.109
-BuildRequires:  liblo-devel
-BuildRequires:  lv2-c++-tools
-BuildRequires:  lv2-c++-tools-devel
-BuildRequires:  pkgconfig
-BuildRequires:  libsamplerate-devel
-BuildRequires:  sndfile-devel
-BuildRequires:  sigc++2.0-devel
-BuildRoot:  %{_tmppath}/%{name}-%{version}-%{release}-buildroot
+Summary:	A collection of LV2 plugins
+Name:	ll-plugins
+Version:	0.2.33
+Release:	1
+License:	GPLv3+
+Group:	Sound
+Url:	https://savannah.nongnu.org/projects/ll-plugins
+Source0:	https://download.savannah.nongnu.org/releases/ll-plugins/%{name}-%{version}.tar.bz2
+BuildRequires:	jackit
+BuildRequires:	lv2-c++-tools
+BuildRequires:	boost-devel
+BuildRequires:	pkgconfig(alsa)
+BuildRequires:	pkgconfig(cairomm-1.16)
+BuildRequires:	pkgconfig(fftw3)
+BuildRequires:	pkgconfig(gsl)
+BuildRequires:	pkgconfig(gtkmm-2.4)
+BuildRequires:	pkgconfig(jack)
+BuildRequires:	pkgconfig(liblo)
+BuildRequires:	pkgconfig(lv2-plugin)
+BuildRequires:	pkgconfig(paq)
+BuildRequires:	pkgconfig(samplerate)
+BuildRequires:	pkgconfig(sigc++-2.0)
+BuildRequires:	pkgconfig(sndfile)
+Requires:	jackit
 
 %description
 THE PLUGINS
@@ -87,53 +85,7 @@ An LV2 version of the Sineshaper synth - two sine oscillators fed through
 two sine waveshapers in series, with a bunch of parameters to control them.
 This plugin has a Gtk GUI too.
 
-%package    gui
-Summary:    GUIs for the ll-plugins package
-Group:      Sound
-
-%description    gui
-This package contains the GUIs for the ll-plugins.
-
-%package -n elven
-Summary:    The LV2 host Elven
-Group:      Sound
-Requires:   jackit >= 0.109
-
-%description -n elven
-THE HOST
-========
-The host that comes with this package is called Elven (Experimental LV2
-Execution ENvironment). It is pretty slow and I don't really recommend it.
-If you can use another host, do that.
-
-%prep
-
-%setup -q -n %{name}-%{version}
-
-%build
-./configure \
-    --prefix=%{_prefix} \
-    --libdir=%{_libdir} \
-    --CFLAGS="%{optflags} -Dclear_path=begin_new_path" \
-    --LDFLAGS=-ldl
-
-%make
-
-%install
-rm -rf %{buildroot}
-
-%makeinstall_std \
-    build_experimental=yes \
-    install-lv2-plugins \
-    prefix=%{_prefix} \
-    libdir=%{_libdir} \
-    docdir=%{_docdir}/%{name}
-
-%clean
-rm -rf %{buildroot}
-
 %files
-%defattr(-, root, root)
 %doc AUTHORS COPYING ChangeLog README
 %{_libdir}/lv2/arpeggiator.lv2/*
 %{_libdir}/lv2/control2midi.lv2/*
@@ -144,41 +96,63 @@ rm -rf %{buildroot}
 %{_libdir}/lv2/rudolf556.lv2/*
 %{_libdir}/lv2/sineshaper.lv2/*
 
+#-----------------------------------------------------------------------------
+
+%package    gui
+Summary:    GUIs for the ll-plugins package
+Group:      Sound
+
+%description    gui
+This package contains the GUIs for the ll-plugins.
+
 %files gui
-%defattr(-, root, root)
 %doc COPYING
 %{_libdir}/lv2/klaviatur_gtk.lv2/*
 %{_libdir}/lv2/peakmeter_gtk.lv2/*
 %{_libdir}/lv2/rudolf556_gtk.lv2/*
 %{_libdir}/lv2/sineshaper_gtk.lv2/*
 
+#-----------------------------------------------------------------------------
+
+%package -n elven
+Summary:    The LV2 host Elven
+Group:      Sound
+Requires:   jackit
+
+%description -n elven
+THE HOST
+========
+The host that comes with this package is called Elven (Experimental LV2
+Execution ENvironment). It is pretty slow and I don't really recommend it.
+If you can use another host, do that.
+
 %files -n elven
-%defattr(-, root, root)
 %doc COPYING
 %{_bindir}/elven
 
+#-----------------------------------------------------------------------------
+
+%prep
+%autosetup -p1 -n %{name}-%{version}
 
 
-%changelog
-* Wed Apr 25 2012 Frank Kober <emuse@mandriva.org> 0.2.8-3
-+ Revision: 793397
-- rebuild fixing BRs
+%build
+./configure \
+	--prefix=%{_prefix} \
+	--libdir=%{_libdir} \
+	--CFLAGS="%{optflags} -Dclear_path=begin_new_path" \
+	--LDFLAGS=-ldl \
+	--lv2plugindir="%{_libdir}/lv2"
 
-* Sat Dec 24 2011 Frank Kober <emuse@mandriva.org> 0.2.8-2
-+ Revision: 745052
-- rebuild fixing dl linking requirement
-
-* Wed Mar 16 2011 Stéphane Téletchéa <steletch@mandriva.org> 0.2.8-1
-+ Revision: 645288
-- update to new version 0.2.8
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - rebuild
-
-* Tue Nov 25 2008 Oden Eriksson <oeriksson@mandriva.com> 0.2.1-1mdv2009.1
-+ Revision: 306743
-- import ll-plugins
+%make_build
 
 
-* Tue Nov 25 2008 Oden Eriksson <oeriksson@mandriva.com> 0.2.1-1mdv2009.0
-- initial Mandriva package
+%install
+%make_install install-lv2-plugins \
+	build_experimental=yes \
+	prefix=%{_prefix} \
+	libdir=%{_libdir} \
+	docdir=%{_docdir}/%{name}
+
+# We pick docs with our macro
+rm -rf %{buildroot}%{_docdir}/%{name}/%{name}
